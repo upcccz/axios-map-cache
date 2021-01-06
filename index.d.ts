@@ -7,7 +7,7 @@ export interface AxiosCacheRequestConfig extends AxiosRequestConfig {
 export interface AxiosCacheInstance extends AxiosInstance {
   (config: AxiosCacheRequestConfig): AxiosPromise;
   (url: string, config?: AxiosCacheRequestConfig): AxiosPromise;
-  _CACHE: CacheModule;
+  mapCache: CacheModule;
 }
 
 export interface CacheConfig {
@@ -32,7 +32,7 @@ export interface CacheModule {
 }
 
 export interface AxiosCache extends AxiosStatic, CacheModule {
-  _CACHE: CacheModule;
+  mapCache: CacheModule;
   create(config?: AxiosRequestConfig): AxiosCacheInstance & CacheModule;
 }
 

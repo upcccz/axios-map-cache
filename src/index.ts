@@ -8,7 +8,7 @@ import { AxiosCache } from '../index';
 function createAxiosCache(axiosInstance: AxiosStatic) {
   const cacheInstance = new CacheModule();
   Object.assign(axiosInstance, {
-    _CACHE: cacheInstance,
+    mapCache: cacheInstance,
   })
   return new Proxy(axiosInstance, handler);
 }

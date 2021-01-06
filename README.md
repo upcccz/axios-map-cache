@@ -124,22 +124,22 @@ axios({
 
 ### Cache API
 
-Cache 的机制是在 axios 上增加一个 `axios._CACHE`，这是一个 `CacheModule` (自定义类) 对象，通过这个对象可以对缓存进行操作或配置。
+Cache 的机制是在 axios 上增加一个 `axios.mapCache`，这是一个 `CacheModule` (自定义类) 对象，通过这个对象可以对缓存进行操作或配置。
 
 #### setCacheConfig(config, options)
 
 ```js
-axios._CACHE.setCacheConfig({ size: 30, showLog: true })
+axios.mapCache.setCacheConfig({ size: 30, showLog: true })
 ```
 
 说明：
-  + 默认 size 为 20，最大值为 50 条，如想设置一个大于 50 的值，除非传入 `options.force` 为 `true`。如 `axios._CACHE.setCacheConfig({ size: 100 }, { force: true })`
+  + 默认 size 为 20，最大值为 50 条，如想设置一个大于 50 的值，除非传入 `options.force` 为 `true`。如 `axios.mapCache.setCacheConfig({ size: 100 }, { force: true })`
   + showLog: 默认不会在打印台输出缓存相关信息，设置为 true，会在打印台输出缓存相关信息(当前请求是否走缓存了、目前存在多少条缓存、缓存的key值)
 
 #### getCacheConfig
 
 ```js
-axios._CACHE.getConfig();
+axios.mapCache.getConfig();
 // 返回当前对缓存的配置
 ```
 
@@ -155,14 +155,14 @@ const requestConfig = {
 
 axios(requestConfig);
 
-axios._CACHE.hasCache(requestConfig) // true
+axios.mapCache.hasCache(requestConfig) // true
 
-axios._CACHE.hasCache({
+axios.mapCache.hasCache({
   method: 'get',
   url: 'path/api/user'
 }) // true
 
-axios._CACHE.hasCache({
+axios.mapCache.hasCache({
   method: 'get',
   url: 'path/api/data'
 }) // false
@@ -173,12 +173,12 @@ axios._CACHE.hasCache({
 手动添加缓存
 
 ```js
-axios._CACHE.setCache(1, { data: 'I am test data'});
+axios.mapCache.setCache(1, { data: 'I am test data'});
 
-axios._CACHE.hasCache(1); // true
-axios._CACHE.getCache(1); // { data: 'I am test data'}
+axios.mapCache.hasCache(1); // true
+axios.mapCache.getCache(1); // { data: 'I am test data'}
 
-axios._CACHE.setCache({
+axios.mapCache.setCache({
   url: 'path/api/test',
   method: 'get'
 }, { data: 'test data'}); // 手动设置缓存
@@ -191,7 +191,7 @@ axios.get('path/api/test'); // 命中缓存 不会发起网络请求
 根据 key 值读取对应的缓存，如果没有，返回 `null`
 
 ```js
-axios._CACHE.getCache({
+axios.mapCache.getCache({
   method: 'get',
   url: 'path/api/user'
 });
@@ -202,7 +202,7 @@ axios._CACHE.getCache({
 返回当前缓存了多少条。
 
 ```js
-axios._CACHE.getCacheSize()
+axios.mapCache.getCacheSize()
 ```
 
 #### removeCache(cacheKey)
@@ -210,7 +210,7 @@ axios._CACHE.getCacheSize()
 根据 key 值删除对应的缓存。
 
 ```js
-axios._CACHE.removeCache({
+axios.mapCache.removeCache({
   method: 'get',
   url: 'path/api/user'
 });
@@ -221,7 +221,7 @@ axios._CACHE.removeCache({
 清空所有缓存
 
 ```js
-axios._CACHE.removeAllCache();
+axios.mapCache.removeAllCache();
 ```
 
 #### getShowLog():boolean
@@ -229,7 +229,7 @@ axios._CACHE.removeAllCache();
 获取当前是否在控制台打印缓存相关输出
 
 ```js
-axios._CACHE.getShowLog();
+axios.mapCache.getShowLog();
 ```
 
 #### response._CACHE_FLAG

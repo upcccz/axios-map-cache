@@ -19,8 +19,8 @@ export default {
           },
           get: (target: Target, propKey: string) => {
             // 向实例暴露_CACHE
-            if (propKey === '_CACHE') {
-              return receiver._CACHE;
+            if (propKey === 'mapCache') {
+              return receiver.mapCache;
             }
 
             if (methods.withData.includes(propKey as string) || methods.withNoData.includes(propKey as string)) {

@@ -7,7 +7,7 @@ export interface CacheResponse extends AxiosResponse<any> {
 
 export default async function applyHandler(target: Target, ctx: any, args, axiosCache: Target, type?: string) {
   let _config;
-  const isShowLog = axiosCache._CACHE.getShowLog();
+  const isShowLog = axiosCache.mapCache.getShowLog();
   if (typeof args[0] === 'string') {
     // 参数格式 (url,data,config) => post put patch  
     if (type && methods.withData.includes(type)) {
@@ -33,11 +33,11 @@ export default async function applyHandler(target: Target, ctx: any, args, axios
   isShowLog && console.log('key -> config', _config);
   // 实例直接调用 axiosInstance(config), 默认只缓存GET请求，除非传入 isCache 为true
   if (_config.isCache) {
-    if (axiosCache._CACHE.hasCache(_config)) {
+    if (axiosCache.mapCache.hasCache(_config)) {
       // 缓存有
-      isShowLog && console.log('%c从缓存拿到的，数据', 'color:green',axiosCache._CACHE.getCache(_config));
-      isShowLog && console.log('当前缓存size', axiosCache._CACHE.getCacheSize());
-      return Promise.resolve(axiosCache._CACHE.getCache(_config))
+      isShowLog && console.log('%c从缓存拿到的，数据', 'color:green',axiosCache.mapCache.getCache(_config));
+      isShowLog && console.log('当前缓存size', axiosCache.mapCache.getCacheSize());
+      return Promise.resolve(axiosCache.mapCache.getCache(_config))
     } else {
       isShowLog && console.log('%c缓存中没有', 'color:#b29400');
       let response = await target.apply(ctx, args);
@@ -49,7 +49,7 @@ export default async function applyHandler(target: Target, ctx: any, args, axios
         } as CacheResponse;
         // 进行缓存
         isShowLog && console.log('请求成功插入缓存', response);
-        axiosCache._CACHE.setCache(_config, response);
+        axiosCache.mapCache.setCache(_config, response);
         return Promise.resolve(response);
       }
     }

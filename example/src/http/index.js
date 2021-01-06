@@ -2,7 +2,7 @@ import { axiosCache as axios } from 'axios-map-cache'
 
 // const { axiosCache: axios } = require('axios-map-cache')
 
-axios._CACHE.setCacheConfig({ size: 100, showLog: true })
+axios.mapCache.setCacheConfig({ size: 100, showLog: true })
 
 const instance = axios.create({
   timeout: 10 * 1000,
@@ -12,7 +12,7 @@ const instance = axios.create({
   }
 })
 
-console.log('当前axiosCache配置为', instance._CACHE.getCacheConfig()) // 访问的等同是 axios._CACHE.getCacheConfig()
+console.log('当前axiosCache配置为', instance.mapCache.getCacheConfig()) // 访问的等同是 axios.mapCache.getCacheConfig()
 instance.defaults.baseURL = './'
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
